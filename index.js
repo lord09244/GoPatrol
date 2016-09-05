@@ -209,7 +209,7 @@ event.on("getmap", function(chatId) {
 	}
 
 	if (pokemons.length > 0) {
-		telegramBot.sendMessage(chatId, "地圖製作中，請稍候...");
+		telegramBot.sendMessage(chatId, "Marker อยู่รอแปปปปสิ...");
 		// 照ID排列
 		var mapPokemon = pokemons;
 		mapPokemon.sort(function(a, b) {
@@ -342,14 +342,14 @@ event.on("getmap", function(chatId) {
 			}
 		}
 	} else {
-		telegramBot.sendMessage(chatId, "目前無資料");
+		telegramBot.sendMessage(chatId, "ไม่มีผลการค้นหา");
 	}
 });
 
 if (config.telegramChannelID != null) {
 	if (config.telegramChannelID.indexOf("@") == 0) {
 		console.log("廣播模式啟動\n");
-		telegramBot.sendMessage(config.telegramChannelID, "伺服器啟動，開始巡邏與通知");
+		telegramBot.sendMessage(config.telegramChannelID, "เซิร์ฟเวอร์เริ่มต้นลาดตระเวนและการแจ้งเตือน");
 
 		// 將頻道ID存入 activeChatIDs
 		activeChatIDs = [config.telegramChannelID];
