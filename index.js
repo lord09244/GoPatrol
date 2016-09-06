@@ -406,18 +406,18 @@ if (config.telegramChannelID != null) {
 						chatId,
 						"GoPatrol " + version + "\n" +
 						"說明：\n" +
-						"以指定位置為中心進行巡邏，尋找附近的寶可夢並利用 Telegram bot 送出通知給使用者、頻道或群組。\n\n" +
+						"เมื่อต้องการระบุสถานที่สำหรับศูนย์ลาดตระเวนสมบัติสามารถค้นหาความฝันที่ใกล้เคียงและใช้โทรเลขบอทจะส่งหนังสือแจ้งไปยังผู้ใช้ช่องทางหรือกลุ่ม。\n\n" +
 						"一般指令：\n" +
-						"/getmap 取得附近寶可夢地圖\n\n" +
-						"管理員專用：\n" +
-						"/help 查看說明\n" +
-						"/run 開始巡邏和通知\n" +
-						"/stop 停止巡邏和通知\n" +
-						"/restart 強制重啟巡邏\n" +
-						"/status 取得伺服器狀態\n" +
-						"/setsteps <數字> 更改巡邏範圍，例如 /setsteps 2\n" +
-						"傳送位置訊息可更改巡邏中心位置\n\n" +
-						"首頁：https://github.com/CacaoRick/GoPatrol"
+						"/getmap แผนที่ขุมทรัพย์ใกล้เคียงสามารถรับได้ฝัน\n\n" +
+						"ผู้ดูแลระบบ：\n" +
+						"/help ช่วย\n" +
+						"/run วิ่ง\n" +
+						"/stop หยุด\n" +
+						"/restart เริมไหม่\n" +
+						"/status สถานะ\n" +
+						"/setsteps <number> เปลี่ยนลาดตระเวนยกตัวอย่างเช่น /setsteps 2\n" +
+						"สถานที่จัดส่งข้อความที่มีความยืดหยุ่นเพื่อลาดตระเวนในตำแหน่งเซ็นเตอร์\n\n" +
+						"ใครทำ：Deadshot++"
 					);
 				}
 
@@ -427,7 +427,7 @@ if (config.telegramChannelID != null) {
 					// 若 chatId 不在清單中，加進去
 					if (!isInActiveChatID) {
 						activeChatIDs.push(chatId);
-						telegramBot.sendMessage(chatId, "管理員已啟動通知");
+						telegramBot.sendMessage(chatId, "ผู้ดูแลระบบการแจ้งเตือนการเปิดใช้งาน");
 					}
 
 					// 若原本沒在執行中，觸發巡邏並更改執行狀態
@@ -436,10 +436,10 @@ if (config.telegramChannelID != null) {
 						event.emit("patrol", runningSpotterId);
 						// 更改執行狀態
 						isPatrolling = true;
-						telegramBot.sendMessage(chatId, "開始巡邏");
+						telegramBot.sendMessage(chatId, "เริ่มต้นการตระเวน");
 					} else {
 						// 本來就在巡邏了
-						telegramBot.sendMessage(chatId, "巡邏進行中");
+						telegramBot.sendMessage(chatId, "ในการลาดตระเวน");
 					}
 				}
 
@@ -450,12 +450,12 @@ if (config.telegramChannelID != null) {
 					var index = activeChatIDs.indexOf(chatId);
 					if (index >= 0) {
 						activeChatIDs.splice(index, 1);
-						telegramBot.sendMessage(chatId, "管理員已停止通知");
+						telegramBot.sendMessage(chatId, "แจ้งผู้ดูแลระบบได้หยุด");
 					}
 					if (activeChatIDs.length == 0) {
 						// 沒人在收通知了，停止巡邏
 						isPatrolling = false;
-						telegramBot.sendMessage(chatId, "巡邏已停止");
+						telegramBot.sendMessage(chatId, "หยุด");
 						console.log("無使用者，已停止巡邏");
 					}
 				}
@@ -465,10 +465,10 @@ if (config.telegramChannelID != null) {
 					console.log(msg.from.username + ": " + command);
 					if (!isPatrolling) {
 						// 巡邏未啟動
-						telegramBot.sendMessage(chatId, "巡邏尚未啟動");
+						telegramBot.sendMessage(chatId, "ยังไม่เริม");
 					} else if (isWattingRestart) {
 						// 已經再重啟中了
-						telegramBot.sendMessage(chatId, "正在重啟中");
+						telegramBot.sendMessage(chatId, "เริ่มต้นใหม่");
 					} else {
 						// 不在重啟中狀態，可以重新啟動
 						restart();
@@ -478,12 +478,12 @@ if (config.telegramChannelID != null) {
 				// 接收狀態
 				if (command == "/status" && isAdmin) {
 					telegramBot.sendMessage(chatId,
-						"伺服器狀態\n" +
-						"巡邏中：" + isPatrolling + "\n" +
-						"帳號數量：" + config.account.length + "\n" +
-						"巡邏範圍：" + spotterOptional.steps * 100 + "m\n" +
-						"巡邏重啟次數：" + runningSpotterId + "\n" +
-						"伺服器啟動日期：" + initDate.getFullYear() + "-" + (initDate.getMonth() + 1) + "-" + initDate.getDate() + " " + getHHMMSS(initDate)
+						"สถานะ\n" +
+						"จุดๆๆ：" + isPatrolling + "\n" +
+						"เลขบัญชี：" + config.account.length + "\n" +
+						"บริเวน：" + spotterOptional.steps * 100 + "m\n" +
+						"running：" + runningSpotterId + "\n" +
+						"วันที่เปิดตัวเซิร์ฟเวอร์：" + initDate.getFullYear() + "-" + (initDate.getMonth() + 1) + "-" + initDate.getDate() + " " + getHHMMSS(initDate)
 					);
 
 					telegramBot.sendVenue(chatId, centerLocation.latitude, centerLocation.longitude, "目前巡邏中心位置", "");
@@ -508,7 +508,7 @@ if (config.telegramChannelID != null) {
 				// 更改座標
 				centerLocation = msg.location;
 				// 通知
-				telegramBot.sendMessage(msg.chat.id, "已更改巡邏中心位置，將於下一次巡邏開始套用");
+				telegramBot.sendMessage(msg.chat.id, "location new");
 			}
 		}
 	});
